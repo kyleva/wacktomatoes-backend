@@ -10,9 +10,9 @@ import 'reflect-metadata';
 import routes from './routes';
 
 createConnection().then(() => {
-  console.log('pillows!');
+  console.log('anyone there?');
   const app: Express = express();
-  const port: number = Number(process.env.PORT) || 3000;
+  const port: number = Number(process.env.PORT) || 3030;
 
   app.use(cors());
   app.use(helmet());

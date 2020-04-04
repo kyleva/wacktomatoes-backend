@@ -4,6 +4,7 @@ import { NextFunction, Response, Request, Router } from 'express';
 /** Our code */
 // Auth
 import { create as createUser } from '../domains/user/queries';
+import { login } from '../auth';
 
 const router = Router();
 
@@ -18,5 +19,7 @@ router.post('/create', (req: Request, res: Response, next: NextFunction) => {
     )
     .catch(error => res.status(400).send());
 });
+
+router.post('/login', login);
 
 export default router;

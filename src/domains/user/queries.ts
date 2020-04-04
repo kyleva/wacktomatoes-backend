@@ -4,12 +4,10 @@ import 'reflect-metadata';
 /** Our code */
 // Entities
 import { User } from './entity';
-// Types
-import { User as UserType } from './types';
 
-export const create = data => {
+export const create = (data: { email: string; password: string }) => {
   const { email, password } = data;
-  const user: UserType = new User();
+  const user: User = new User();
 
   user.email = email;
   user.password = password;

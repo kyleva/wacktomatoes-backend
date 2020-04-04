@@ -45,6 +45,9 @@ export const changePassword = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
+  console.log({ email, password });
+  console.log('SAD');
+
   if (!email || !password) {
     res.status(400).send();
   }
@@ -55,7 +58,9 @@ export const login = async (req: Request, res: Response) => {
   try {
     user = await userRepository.findOneOrFail({ where: { email } });
   } catch (error) {
-    res.status(401).send();
+    res.status(401).json({
+      error: true,
+    });
     return;
   }
 
@@ -68,7 +73,7 @@ export const login = async (req: Request, res: Response) => {
     { expiresIn: '1h' },
   );
 
-  res.send(token);
+  res.status(200).json({ data: { token } });
 };
 
 export default {
