@@ -10,6 +10,7 @@ export const create = async (data: {
   description: string;
   endTime: Date;
   startTime: Date;
+  token: string;
   userId: number;
 }) => {
   const { description, endTime, startTime, userId } = data;
@@ -19,6 +20,8 @@ export const create = async (data: {
   pomodoro.endTime = endTime;
   pomodoro.startTime = startTime;
   pomodoro.user = await User.findOne(userId);
+
+  console.log(pomodoro);
 
   return pomodoro.save();
 };

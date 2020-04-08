@@ -39,7 +39,9 @@ export const changePassword = async (req: Request, res: Response) => {
   user.hashPassword();
   userRepository.save(user);
 
-  res.status(204).send();
+  res.status(204).json({
+    data: user,
+  });
 };
 
 export const login = async (req: Request, res: Response) => {
