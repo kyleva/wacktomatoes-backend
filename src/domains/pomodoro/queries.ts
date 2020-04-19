@@ -12,7 +12,6 @@ export const create = async (data: {
   description: string;
   endTime: Date;
   startTime: Date;
-  token: string;
   userId: number;
 }) => {
   const { description, endTime, startTime, userId } = data;

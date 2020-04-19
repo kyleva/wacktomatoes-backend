@@ -9,7 +9,7 @@ import { login } from '../auth';
 // Configs
 import config from '../globals/config';
 // Helpers
-import { getPayloadFromToken } from '../modules/jwt';
+import { getPayloadFromToken, getTokenFromHeader } from '../modules/jwt';
 
 const router = Router();
 
@@ -34,8 +34,7 @@ router.post('/create', (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.post('/verify', (req: Request, res: Response, next: NextFunction) => {
-  const { token } = req.body;
-
+  const token = getTokenFromHeader(req);
   const jwtPayload = getPayloadFromToken(token);
 
   if (jwtPayload) {

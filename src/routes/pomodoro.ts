@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request, Router } from 'express';
 
-import { getPayloadFromToken } from '../modules/jwt';
+import verifyJwt from '../middlewares/jwt';
+import { getPayloadFromToken, getTokenFromHeader } from '../modules/jwt';
 
 import {
   create as createPomodoro,
@@ -9,21 +10,26 @@ import {
 
 const router = Router();
 
-router.post('/create', (req: Request, res: Response, next: NextFunction) => {
-  const { description, endTime, startTime, token } = req.body;
-  const { userId } = getPayloadFromToken(token);
+router.post(
+  '/create',
+  verifyJwt,
+  (req: Request, res: Response, next: NextFunction) => {
+    const { description, endTime, startTime } = req.body;
+    const token = getTokenFromHeader(req);
+    const { userId } = getPayloadFromToken(token);
 
-  createPomodoro({ description, endTime, startTime, token, userId })
-    .then((pomodoro) =>
-      res.status(300).json({
-        data: pomodoro,
-      }),
-    )
-    .catch((error) => res.status(503).json({ error: { message: error } }));
-});
+    createPomodoro({ description, endTime, startTime, userId })
+      .then((pomodoro) =>
+        res.status(300).json({
+          data: pomodoro,
+        }),
+      )
+      .catch((error) => res.status(503).json({ error: { message: error } }));
+  },
+);
 
-router.post('/getAllForUser', (req, res, next) => {
-  const { token } = req.body;
+router.post('/getAllForUser', verifyJwt, (req, res, next) => {
+  const token = getTokenFromHeader(req);
 
   getAllForUser({ token })
     .then((pomodoros) =>

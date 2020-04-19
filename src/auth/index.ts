@@ -91,13 +91,14 @@ export const login = async (req: Request, res: Response) => {
 
   console.log(email, password);
 
-  // if (!user.checkIfUnencryptedPasswordIsValid(password)) {
-  //   res.status(401).json({
-  //     error: true,
-  //     message: 'The provided password was incorrect.',
-  //   });
-  //   return;
-  // }
+  if (!user.checkIfUnencryptedPasswordIsValid(password)) {
+    res.status(401).json({
+      error: {
+        message: 'The provided password was incorrect.',
+      },
+    });
+    return;
+  }
 
   const token = jwt.sign(
     {

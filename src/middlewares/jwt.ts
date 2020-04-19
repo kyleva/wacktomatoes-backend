@@ -4,9 +4,10 @@ import { NextFunction, Response, Request } from 'express';
 
 /** Our code */
 import config from '../globals/config';
+import { getTokenFromHeader } from '../modules/jwt';
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  const token = <string>req.header['auth'];
+  const token = getTokenFromHeader(req);
   let jwtPayload;
 
   try {
@@ -21,9 +22,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
     return;
   }
 
-  const { userId, email } = jwtPayload;
-  const newToken = jwt.sign({ userId, email }, config.jwtSecret, {
-    expiresIn: '30 days',
-  });
-  res.setHeader('token', newToken);
+  next();
 };

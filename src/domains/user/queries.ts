@@ -12,5 +12,7 @@ export const create = (data: { email: string; password: string }) => {
   user.email = email;
   user.password = password;
 
+  user.hashPassword();
+
   return user.save();
 };
