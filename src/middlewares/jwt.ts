@@ -13,13 +13,17 @@ export default (req: Request, res: Response, next: NextFunction) => {
     jwtPayload = <any>jwt.verify(token, config.jwtSecret);
     res.locals.jwtPayload = jwtPayload;
   } catch (error) {
-    res.status(401).send();
+    res.status(401).json({
+      error: {
+        message: 'User session has expired.',
+      },
+    });
     return;
   }
 
   const { userId, email } = jwtPayload;
   const newToken = jwt.sign({ userId, email }, config.jwtSecret, {
-    expiresIn: '1hr',
+    expiresIn: '30 days',
   });
   res.setHeader('token', newToken);
 };

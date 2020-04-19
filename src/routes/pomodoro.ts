@@ -1,9 +1,11 @@
 import { NextFunction, Response, Request, Router } from 'express';
 
-import checkJwt from '../middlewares/jwt';
 import { getPayloadFromToken } from '../modules/jwt';
 
-import { create as createPomodoro } from '../domains/pomodoro/queries';
+import {
+  create as createPomodoro,
+  getAll as getAllForUser,
+} from '../domains/pomodoro/queries';
 
 const router = Router();
 
@@ -17,7 +19,19 @@ router.post('/create', (req: Request, res: Response, next: NextFunction) => {
         data: pomodoro,
       }),
     )
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(503).json({ error: { message: error } }));
+});
+
+router.post('/getAllForUser', (req, res, next) => {
+  const { token } = req.body;
+
+  getAllForUser({ token })
+    .then((pomodoros) =>
+      res.status(300).json({
+        data: pomodoros,
+      }),
+    )
+    .catch((error) => res.status(400).json({ error: { message: error } }));
 });
 
 export default router;

@@ -5,6 +5,8 @@ import 'reflect-metadata';
 // Entities
 import { Pomodoro } from './entity';
 import { User } from '../user/entity';
+// Helpers
+import { getPayloadFromToken } from '../../modules/jwt';
 
 export const create = async (data: {
   description: string;
@@ -17,11 +19,18 @@ export const create = async (data: {
 
   const pomodoro = new Pomodoro();
   pomodoro.description = description;
-  pomodoro.endTime = endTime;
-  pomodoro.startTime = startTime;
+  pomodoro.endTime = new Date(endTime);
+  pomodoro.startTime = new Date(startTime);
   pomodoro.user = await User.findOne(userId);
 
-  console.log(pomodoro);
-
   return pomodoro.save();
+};
+
+export const getAll = async (data: { token: string }) => {
+  const { token } = data;
+  const { userId } = getPayloadFromToken(token);
+
+  const pomodoros = await Pomodoro.find({ where: { user: { id: userId } } });
+
+  return pomodoros;
 };
