@@ -9,7 +9,7 @@
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "heroku-postinstall": "npm run clean && npm run build",
     "start": "cd build && node app",
-    "dev": "set debug=* && ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/app.ts",
+    "dev": "NODE_ENV=local set debug=* && ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
   },
