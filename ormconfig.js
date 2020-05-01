@@ -11,7 +11,8 @@ const paths = {
   },
 };
 
-const env = process.env.NODE_ENV || 'remote';
+// TODO: cleanup this mess
+const env = process.env.NODE_ENV === 'local' ? 'local' : 'remote';
 
 module.exports = {
   type: 'postgres',
