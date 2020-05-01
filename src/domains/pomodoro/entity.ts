@@ -38,9 +38,6 @@ export class Pomodoro extends BaseEntity {
   @UpdateDateColumn()
   updatedDate: Date;
 
-  @ManyToOne(
-    type => User,
-    user => user.pomodoros,
-  )
+  @ManyToOne((type) => User, (user) => user.pomodoros)
   user: User;
 }

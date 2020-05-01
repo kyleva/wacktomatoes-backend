@@ -1,10 +1,10 @@
 /* Third-party dependencies */
+import 'reflect-metadata';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { createConnection } from 'typeorm';
 import express, { Express } from 'express';
 import helmet from 'helmet';
-import 'reflect-metadata';
 
 /** Our code */
 import routes from './routes';
