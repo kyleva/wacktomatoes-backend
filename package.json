@@ -4,8 +4,11 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
+    "build": "babel -d ./build ./src -s",
+    "clean": "rm -rf ./build && mkdir build",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "start": "tsc && node ./build/app.js",
+    "heroku-postinstall": "npm run clean && npm run build",
+    "start": "node ./build/app.js",
     "dev": "set debug=* && ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
@@ -35,6 +38,7 @@
     "@types/helmet": "0.0.45",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/node": "^8.0.29",
+    "babel-cli": "^6.26.0",
     "eslint": "^6.8.0",
     "nodemon": "^2.0.2",
     "ts-node": "3.3.0",
