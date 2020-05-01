@@ -10,7 +10,6 @@ import 'reflect-metadata';
 import routes from './routes';
 
 createConnection().then(() => {
-  console.log('anyone there?');
   const app: Express = express();
   const port: number = Number(process.env.PORT) || 3030;
 
@@ -18,6 +17,8 @@ createConnection().then(() => {
   app.use(helmet());
   app.use(bodyParser.json());
   app.use('/', routes);
+
+  app.options('*', cors());
 
   app.listen(port, (err: string) => {
     if (err) {
