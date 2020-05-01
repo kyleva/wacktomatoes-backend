@@ -13,12 +13,10 @@ createConnection().then(() => {
   const app: Express = express();
   const port: number = Number(process.env.PORT) || 3030;
 
-  app.use(cors());
-  app.use(helmet());
+  app.options('*', cors());
+  // app.use(helmet());
   app.use(bodyParser.json());
   app.use('/', routes);
-
-  app.options('*', cors());
 
   app.listen(port, (err: string) => {
     if (err) {
