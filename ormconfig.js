@@ -7,7 +7,7 @@ module.exports = {
   database: process.env.DB_NAME || 'wacktomatoes',
   synchronize: true,
   logging: false,
-  entities: ['build/domains/*/entity.js', 'src/domains/*/entity{.ts,.js}'],
+  entities: ['build/domains/*/entity.js'],
   migrations: ['build/migrations/**/*.js', 'src/migrations/**/*.js'],
   subscribers: ['build/subscribers/**/*.js', 'src/subscribers/**/*.js'],
   cli: {
