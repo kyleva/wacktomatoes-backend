@@ -1,19 +1,3 @@
-const paths = {
-  local: {
-    entities: 'src/domains/*/entity.ts',
-    migrations: 'src/migration/**/*.ts',
-    subscribers: 'src/subscriber/**/*.ts',
-  },
-  remote: {
-    entities: 'build/domains/*/entity.js',
-    migrations: 'build/migrations/**/*.js',
-    subscribers: 'build/subscribers/**/*.js.',
-  },
-};
-
-// TODO: cleanup this mess
-const env = process.env.NODE_ENV === 'local' ? 'local' : 'remote';
-
 module.exports = {
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
@@ -23,9 +7,9 @@ module.exports = {
   database: process.env.DB_NAME || 'wacktomatoes',
   synchronize: true,
   logging: false,
-  entities: [paths[env].entities],
-  migrations: [paths[env].migrations],
-  subscribers: [paths[env].subscribers],
+  entities: ['build/**/*.entity{.ts,.js}', 'src/**/*.entity{.ts,.js}'],
+  migrations: ['build/migrations/**/*.js', 'src/migrations/**/*.js'],
+  subscribers: ['build/subscribers/**/*.js', 'src/subscribers/**/*.js'],
   cli: {
     entitiesDir: 'src/entity',
     migrationsDir: 'src/migration',
