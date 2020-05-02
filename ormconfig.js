@@ -1,3 +1,5 @@
+const buildDirectory = process.env.NODE_ENV ? 'build' : 'src';
+
 module.exports = {
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
@@ -7,9 +9,9 @@ module.exports = {
   database: process.env.DB_NAME || 'wacktomatoes',
   synchronize: true,
   logging: false,
-  entities: ['build/domains/*/entity.js'],
-  migrations: ['build/migrations/**/*.js', 'src/migrations/**/*.js'],
-  subscribers: ['build/subscribers/**/*.js', 'src/subscribers/**/*.js'],
+  entities: [`${buildDirectory}/domains/*/entity.js`],
+  migrations: [`${buildDirectory}/migrations/**/*.js`],
+  subscribers: [`${buildDirectory}/subscribers/**/*.js`],
   cli: {
     entitiesDir: 'src/entity',
     migrationsDir: 'src/migration',
